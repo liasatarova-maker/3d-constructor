@@ -1,58 +1,18 @@
 <!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#f4f8fc">
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f4f8fc">
   <title>LuxPrint — 3D конструктор</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="src/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="src/styles.css">
 </head>
 <body>
-  <main class="app-shell">
-    <section class="screen catalog-screen" id="catalogScreen">
-      <div class="catalog-head">
-        <div class="catalog-title"><div class="eyebrow">LuxPrint · больше, чем печать</div><h1>Продукция</h1></div>
-        <label class="search"><span>⌕</span><input id="searchInput" type="search" placeholder="Поиск по продукции"></label>
-      </div>
-      <p class="catalog-subtitle">Выберите изделие, чтобы перейти к его настройке.</p>
-      <nav class="categories" id="categories" aria-label="Категории"></nav>
-      <div class="product-grid" id="productGrid"></div>
-    </section>
-
-    <section class="screen builder-screen is-hidden" id="builderScreen">
-      <div class="builder-layout">
-        <aside class="panel configurator">
-          <button class="back-link" id="backToCatalog" type="button">← <span>Каталог</span></button>
-          <div class="product-heading"><div class="eyebrow">Полиграфия</div><h1>Календарь-домик</h1><p>Загрузите дизайн, укажите тираж и посмотрите результат на 3D-модели.</p></div>
-          <div id="optionsRoot"></div>
-          <div class="price-card"><div><span>Стоимость заказа</span><strong id="priceValue">—</strong><small>130 ₽ за 1 календарь</small></div><button class="primary" id="quoteButton" type="button">Сформировать заявку →</button></div>
-        </aside>
-
-        <section class="viewer" id="viewer" aria-label="3D-превью изделия">
-          <div class="viewer-badge"><span class="live-dot"></span> 3D-превью</div>
-          <div class="scene" id="scene"></div>
-          <div class="viewer-tools"><button id="zoomIn" type="button">+</button><button id="zoomOut" type="button">−</button><button id="resetView" type="button">↻</button></div>
-          <div class="viewer-help">Потяните мышью, чтобы вращать · колесо — масштаб</div>
-        </section>
-      </div>
-    </section>
-  </main>
-
-  <div class="modal is-hidden" id="quoteModal">
-    <div class="modal-card">
-      <button class="modal-close" id="closeModal" type="button">×</button>
-      <div class="eyebrow">Заявка на производство</div><h2>Календарь-домик</h2>
-      <div class="quote-preview"><img id="quoteImage" alt="3D-превью заказа"></div>
-      <div class="quote-details" id="quoteDetails"></div>
-      <button class="primary wide" id="confirmQuote" type="button">Отправить заявку</button>
-      <p class="modal-note">Сейчас это демонстрация заявки. На следующем этапе подключим реальную отправку в Bitrix.</p>
-    </div>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
-  <script src="src/data.js"></script><script src="src/viewer.js"></script><script src="src/app.js"></script>
-</body>
-</html>
+<main class="app-shell">
+  <section class="screen catalog-screen" id="catalogScreen"><div class="catalog-head"><div class="catalog-title"><div class="eyebrow">LuxPrint · больше, чем печать</div><h1>Продукция</h1></div><label class="search"><span>⌕</span><input id="searchInput" type="search" placeholder="Поиск по продукции"></label></div><p class="catalog-subtitle">Выберите изделие, чтобы перейти к его настройке.</p><nav class="categories" id="categories"></nav><div class="product-grid" id="productGrid"></div></section>
+  <section class="screen builder-screen is-hidden" id="builderScreen"><div class="builder-layout">
+    <aside class="panel configurator"><button class="back-link" id="backToCatalog" type="button">← <span>Каталог</span></button><div class="product-heading"><div class="eyebrow">Полиграфия</div><h1>Календарь-домик</h1><p>Загрузите изображение, настройте макет и посмотрите результат на 3D-модели.</p></div><div id="optionsRoot"></div><div class="price-card"><div><span>Стоимость заказа</span><strong id="priceValue">—</strong><small>130 ₽ за 1 календарь</small></div><button class="primary" id="quoteButton" type="button">Сформировать заявку →</button></div></aside>
+    <section class="viewer" id="viewer"><div class="viewer-badge"><span class="live-dot"></span> 3D-превью</div><div class="scene" id="scene"></div><div class="viewer-tools"><button id="zoomIn" type="button">+</button><button id="zoomOut" type="button">−</button><button id="resetView" type="button">↻</button></div><div class="viewer-help" id="viewerHelp">Потяните мышью, чтобы вращать · колесо — масштаб</div></section>
+  </div></section>
+</main>
+<div class="modal is-hidden" id="quoteModal"><div class="modal-card"><button class="modal-close" id="closeModal">×</button><div class="eyebrow">Заявка на производство</div><h2>Календарь-домик</h2><div class="quote-preview"><img id="quoteImage" alt="3D-превью заказа"></div><div class="quote-details" id="quoteDetails"></div><button class="primary wide" id="confirmQuote">Отправить заявку</button><p class="modal-note">Сейчас это демонстрация заявки. Позже подключим реальную отправку в Bitrix.</p></div></div>
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script><script src="src/data.js"></script><script src="src/viewer.js"></script><script src="src/app.js"></script>
+</body></html>
