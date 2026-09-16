@@ -1,94 +1,31 @@
 (() => {
-  const data = window.LUXPRINT_DATA;
-  const catalogScreen = document.getElementById("catalogScreen");
-  const builderScreen = document.getElementById("builderScreen");
-  const grid = document.getElementById("productGrid");
-  const categories = document.getElementById("categories");
-  const search = document.getElementById("searchInput");
-  const optionsRoot = document.getElementById("optionsRoot");
-  const priceValue = document.getElementById("priceValue");
-  let activeCategory = "Все";
-  let query = "";
-  let qty = data.constructor.pricing.defaultQty;
-  const selected = {};
-  data.constructor.groups.forEach(group => selected[group.id] = group.options[0].id);
-
-  const iconMarkup = (type) => `<div class="product-icon product-icon--${type}"><i></i><b></b></div>`;
-
-  function renderCategories() {
-    categories.innerHTML = data.categories.map(c => `<button class="category ${c === activeCategory ? "active" : ""}" data-category="${c}">${c}</button>`).join("");
+  const data=window.LUXPRINT_DATA,$=s=>document.querySelector(s);
+  const catalog=$('#catalogScreen'),builder=$('#builderScreen'),grid=$('#productGrid'),categories=$('#categories'),search=$('#searchInput'),options=$('#optionsRoot'),price=$('#priceValue'),modal=$('#quoteModal');
+  let activeCategory='Все',query='',qty=data.constructor.pricing.defaultQty,designName='Не загружен';
+  const iconMarkup=t=>`<div class="product-icon product-icon--${t}"><i></i><b></b></div>`;
+  function renderCategories(){categories.innerHTML=data.categories.map(c=>`<button class="category ${c===activeCategory?'active':''}" data-category="${c}">${c}</button>`).join('')}
+  function renderProducts(){const list=data.products.filter(p=>(activeCategory==='Все'||p.category===activeCategory)&&(`${p.title} ${p.description}`.toLowerCase().includes(query)));grid.innerHTML=list.length?list.map(p=>`<article class="product-card ${p.configurable?'ready':''}" data-product="${p.id}"><div class="product-visual">${iconMarkup(p.icon)}${p.configurable?'<span class="ready-pill">3D</span>':''}</div><div class="product-copy"><span>${p.category}</span><h2>${p.title}</h2><p>${p.description}</p><button type="button">${p.configurable?'Настроить →':'Скоро'}</button></div></article>`).join(''):'<div class="empty-state">Ничего не найдено</div>'}
+  function renderOptions(){
+    options.innerHTML=`<section class="option-group"><h3><span>1</span>Характеристики</h3><div class="spec-list">${data.constructor.specs.map(s=>`<div><small>${s.label}</small><b>${s.value}</b></div>`).join('')}</div></section>
+    <section class="option-group"><h3><span>2</span>Ваш дизайн</h3><label class="upload-box"><input id="designUpload" type="file" accept="image/png,image/jpeg,image/webp"><i>＋</i><div><b>Добавить свой дизайн</b><small id="designName">PNG, JPG или WEBP</small></div></label></section>
+    <section class="option-group"><h3><span>3</span>Тираж</h3><div class="quantity"><button type="button" id="qtyMinus">−</button><strong id="qtyValue">${qty}</strong><span>шт.</span><button type="button" id="qtyPlus">+</button></div></section>`;
+    $('#qtyMinus').onclick=()=>changeQty(-1);$('#qtyPlus').onclick=()=>changeQty(1);
+    $('#designUpload').onchange=e=>{const file=e.target.files[0];if(!file)return;designName=file.name;$('#designName').textContent=file.name;window.LuxViewer.setDesign(file)};
   }
-
-  function renderProducts() {
-    const list = data.products.filter(p => (activeCategory === "Все" || p.category === activeCategory) && (`${p.title} ${p.description}`.toLowerCase().includes(query)));
-    grid.innerHTML = list.length ? list.map(p => `
-      <article class="product-card ${p.configurable ? "ready" : ""}" data-product="${p.id}">
-        <div class="product-visual">${iconMarkup(p.icon)}${p.configurable ? '<span class="ready-pill">3D</span>' : ''}</div>
-        <div class="product-copy"><span>${p.category}</span><h2>${p.title}</h2><p>${p.description}</p><button type="button">${p.configurable ? "Настроить →" : "Скоро"}</button></div>
-      </article>`).join("") : `<div class="empty-state">Ничего не найдено</div>`;
+  function changeQty(d){qty=Math.max(1,qty+d);$('#qtyValue').textContent=qty;updatePrice()}
+  function total(){return qty*data.constructor.pricing.perUnit}
+  function updatePrice(){price.textContent=`${total().toLocaleString('ru-RU')} ₽`}
+  function openBuilder(){catalog.classList.add('is-hidden');builder.classList.remove('is-hidden');scrollTo(0,0);setTimeout(()=>window.dispatchEvent(new Event('resize')),50);updatePrice()}
+  function openQuote(){
+    $('#quoteImage').src=window.LuxViewer.snapshot();
+    $('#quoteDetails').innerHTML=`<div><span>Размер</span><b>297 × 210 мм</b></div><div><span>Материал</span><b>Плотная бумага, 270 г/м²</b></div><div><span>Печать</span><b>4 + 0</b></div><div><span>Дизайн</span><b>${designName}</b></div><div><span>Тираж</span><b>${qty} шт.</b></div><div class="quote-total"><span>Стоимость</span><b>${total().toLocaleString('ru-RU')} ₽</b></div>`;
+    modal.classList.remove('is-hidden');
   }
-
-  function renderOptions() {
-    optionsRoot.innerHTML = data.constructor.groups.map((group, index) => `
-      <section class="option-group">
-        <h3><span>${index + 1}</span>${group.label}</h3>
-        <div class="option-list" data-group="${group.id}">
-          ${group.options.map(o => `<button type="button" class="option ${selected[group.id] === o.id ? "active" : ""}" data-option="${o.id}">${o.tone ? `<i class="material-swatch ${o.tone}"></i>` : ""}<b>${o.label}</b>${o.note ? `<small>${o.note}</small>` : ""}</button>`).join("")}
-        </div>
-      </section>`).join("") + `
-      <section class="option-group"><h3><span>4</span>Тираж</h3><div class="quantity"><button type="button" id="qtyMinus">−</button><strong id="qtyValue">${qty}</strong><span>шт.</span><button type="button" id="qtyPlus">+</button></div></section>`;
-    document.getElementById("qtyMinus").onclick = () => changeQty(-data.constructor.pricing.qtyStep);
-    document.getElementById("qtyPlus").onclick = () => changeQty(data.constructor.pricing.qtyStep);
-  }
-
-  function changeQty(delta) {
-    qty = Math.max(data.constructor.pricing.minQty, qty + delta);
-    document.getElementById("qtyValue").textContent = qty;
-    updatePrice();
-  }
-
-  function findOption(groupId) {
-    const group = data.constructor.groups.find(g => g.id === groupId);
-    return group.options.find(o => o.id === selected[groupId]);
-  }
-
-  function updatePrice() {
-    const pricing = data.constructor.pricing;
-    const size = findOption("size");
-    const material = findOption("material");
-    const print = findOption("print");
-    const base = pricing.setup + qty * pricing.perUnit + (size.price || 0) + (material.price || 0);
-    const total = Math.round(base * (print.multiplier || 1));
-    priceValue.textContent = `${total.toLocaleString("ru-RU")} ₽`;
-  }
-
-  function openBuilder() {
-    catalogScreen.classList.add("is-hidden");
-    builderScreen.classList.remove("is-hidden");
-    window.scrollTo(0, 0);
-    updatePrice();
-  }
-
-  categories.onclick = e => {
-    const btn = e.target.closest("[data-category]"); if (!btn) return;
-    activeCategory = btn.dataset.category; renderCategories(); renderProducts();
-  };
-  grid.onclick = e => {
-    const card = e.target.closest("[data-product]"); if (!card) return;
-    const product = data.products.find(p => p.id === card.dataset.product);
-    if (product?.configurable) openBuilder();
-  };
-  search.oninput = e => { query = e.target.value.trim().toLowerCase(); renderProducts(); };
-  optionsRoot.onclick = e => {
-    const btn = e.target.closest("[data-option]"); if (!btn) return;
-    const list = btn.closest("[data-group]");
-    selected[list.dataset.group] = btn.dataset.option;
-    list.querySelectorAll(".option").forEach(x => x.classList.toggle("active", x === btn));
-    if (list.dataset.group === "material") window.LuxViewer.setMaterial(findOption("material").tone);
-    updatePrice();
-  };
-  document.getElementById("backToCatalog").onclick = () => { builderScreen.classList.add("is-hidden"); catalogScreen.classList.remove("is-hidden"); };
-  document.getElementById("quoteButton").onclick = () => alert("На следующем этапе подключим отправку конфигурации в заявку / Bitrix.");
-
-  renderCategories(); renderProducts(); renderOptions(); updatePrice(); window.LuxViewer.init();
+  categories.onclick=e=>{const b=e.target.closest('[data-category]');if(!b)return;activeCategory=b.dataset.category;renderCategories();renderProducts()};
+  grid.onclick=e=>{const c=e.target.closest('[data-product]');if(c&&data.products.find(p=>p.id===c.dataset.product)?.configurable)openBuilder()};
+  search.oninput=e=>{query=e.target.value.trim().toLowerCase();renderProducts()};
+  $('#backToCatalog').onclick=()=>{builder.classList.add('is-hidden');catalog.classList.remove('is-hidden')};
+  $('#quoteButton').onclick=openQuote;$('#closeModal').onclick=()=>modal.classList.add('is-hidden');modal.onclick=e=>{if(e.target===modal)modal.classList.add('is-hidden')};
+  $('#confirmQuote').onclick=()=>alert('Демонстрация готова. Следующий шаг — подключить отправку заявки в Bitrix.');
+  renderCategories();renderProducts();renderOptions();updatePrice();window.LuxViewer.init();
 })();
