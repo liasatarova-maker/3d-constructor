@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f4f8fc">
+  <title>LuxPrint — 3D конструктор</title>
+  <link rel="stylesheet" href="src/styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section class="screen catalog-screen" id="catalogScreen">
+      <div class="catalog-head">
+        <div>
+          <div class="eyebrow">LuxPrint · больше, чем печать</div>
+          <h1>Продукция</h1>
+          <p>Выберите изделие, чтобы перейти к его настройке.</p>
+        </div>
+        <label class="search"><span>⌕</span><input id="searchInput" type="search" placeholder="Поиск по продукции"></label>
+      </div>
+      <nav class="categories" id="categories" aria-label="Категории"></nav>
+      <div class="product-grid" id="productGrid"></div>
+    </section>
+
+    <section class="screen builder-screen is-hidden" id="builderScreen">
+      <div class="builder-layout">
+        <aside class="panel configurator">
+          <button class="back-link" id="backToCatalog" type="button" aria-label="Вернуться в каталог">← <span>Каталог</span></button>
+          <div class="product-heading">
+            <div class="eyebrow">Полиграфия</div>
+            <h1 id="builderTitle">Календарь-домик</h1>
+            <p>Настройте параметры изделия. Справа — интерактивное превью.</p>
+          </div>
+          <div id="optionsRoot"></div>
+          <div class="price-card">
+            <div><span>Предварительная стоимость</span><strong id="priceValue">—</strong><small>Тестовый расчёт, не является офертой</small></div>
+            <button class="primary" id="quoteButton" type="button">Отправить на расчёт →</button>
+          </div>
+        </aside>
+
+        <section class="viewer" id="viewer" aria-label="3D-превью изделия">
+          <div class="viewer-badge"><span class="live-dot"></span> Интерактивное превью</div>
+          <div class="scene" id="scene">
+            <div class="calendar-model" id="calendarModel">
+              <div class="calendar-base"></div>
+              <div class="calendar-page" id="calendarPage">
+                <div class="calendar-art"></div>
+                <div class="calendar-year">2026</div>
+                <div class="calendar-caption">LUXPRINT</div>
+                <div class="calendar-rings"></div>
+              </div>
+            </div>
+          </div>
+          <div class="viewer-tools">
+            <button id="zoomIn" type="button" title="Приблизить">+</button>
+            <button id="zoomOut" type="button" title="Отдалить">−</button>
+            <button id="resetView" type="button" title="Сбросить">↻</button>
+          </div>
+          <div class="viewer-help">Потяните мышью, чтобы вращать · колесо — масштаб</div>
+        </section>
+      </div>
+    </section>
+  </main>
+  <script src="src/data.js"></script>
+  <script src="src/viewer.js"></script>
+  <script src="src/app.js"></script>
+</body>
+</html>
