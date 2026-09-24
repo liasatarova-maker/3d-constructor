@@ -11,3 +11,27 @@
 .builder-screen:not(.is-hidden) .product-preview{height:100%;min-height:0}
 .builder-screen:not(.is-hidden) .product-preview>img{height:100%;min-height:0;max-height:100%;object-fit:cover}
 @media(max-width:900px){.builder-screen:not(.is-hidden){height:auto;overflow:visible}.builder-screen:not(.is-hidden) .product-preview>img{min-height:520px}}
+
+/* Styled dimension fields for sticker calculator */
+.option-group .spec-list input[type="number"]{
+  width:150px;
+  max-width:45%;
+  box-sizing:border-box;
+  border:1px solid #d9e4ef;
+  border-radius:12px;
+  background:#f8fbff;
+  padding:10px 13px;
+  font:600 14px/1.2 Onest,sans-serif;
+  color:var(--ink);
+  text-align:right;
+  outline:none;
+  transition:border-color .2s,box-shadow .2s,background .2s;
+}
+.option-group .spec-list input[type="number"]:focus{
+  border-color:#8fc2f5;
+  background:#fff;
+  box-shadow:0 0 0 3px rgba(38,136,238,.10);
+}
+.option-group .spec-list input[type="number"]::-webkit-inner-spin-button,
+.option-group .spec-list input[type="number"]::-webkit-outer-spin-button{opacity:.45}
+@media(max-width:650px){.option-group .spec-list input[type="number"]{width:120px;max-width:48%}}
