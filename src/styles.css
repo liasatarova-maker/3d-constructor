@@ -35,3 +35,22 @@
 .option-group .spec-list input[type="number"]::-webkit-inner-spin-button,
 .option-group .spec-list input[type="number"]::-webkit-outer-spin-button{opacity:.45}
 @media(max-width:650px){.option-group .spec-list input[type="number"]{width:120px;max-width:48%}}
+
+/* Compact sticker size controls */
+.option-group .spec-list input[type="number"]{
+  width:82px;
+  min-width:82px;
+  max-width:82px;
+  height:38px;
+  padding:7px 10px;
+  border-radius:10px;
+  font-size:13px;
+  text-align:center;
+}
+.option-group .spec-list>div:has(input[type="number"]){
+  min-height:58px;
+  padding:10px 14px;
+}
+@media(max-width:650px){
+  .option-group .spec-list input[type="number"]{width:76px;min-width:76px;max-width:76px;height:36px}
+}
