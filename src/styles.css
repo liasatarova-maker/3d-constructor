@@ -92,3 +92,21 @@
 .contact-socials a:hover{background:#eaf5ff;border-color:#a9cff9}
 .order-side-panel{padding-top:20px}
 .order-side-panel .contact-card{width:100%;box-sizing:border-box}
+
+/* Wider contact column/card */
+.builder-screen:not(.is-hidden) .builder-layout{grid-template-columns:minmax(390px,32%) minmax(0,1fr) 330px}
+.order-side-panel{padding-left:18px;padding-right:18px}
+.contact-card{padding:22px}
+.contact-lines a{display:grid;grid-template-columns:1fr;gap:2px}
+.contact-lines small{margin:0}
+.contact-lines b{font-size:14px;white-space:nowrap}
+.contact-location b{font-size:14px}
+@media(max-width:1250px){
+  .builder-screen:not(.is-hidden) .builder-layout{grid-template-columns:minmax(360px,38%) minmax(0,1fr)}
+  .order-side-panel{grid-column:1/-1;flex-direction:row;align-items:center}
+  .order-side-panel .contact-card{max-width:520px}
+}
+@media(max-width:900px){
+  .builder-screen:not(.is-hidden) .builder-layout{display:flex;flex-direction:column}
+  .order-side-panel .contact-card{max-width:none}
+}
