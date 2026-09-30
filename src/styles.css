@@ -58,3 +58,22 @@
 /* Vertically center labels in dimension rows */
 .option-group .spec-list>div:has(input[type="number"]){align-items:center}
 .option-group .spec-list>div:has(input[type="number"])>small{margin:0;align-self:center}
+
+/* Right-side order panel */
+.builder-screen:not(.is-hidden) .builder-layout{grid-template-columns:minmax(390px,34%) minmax(0,1fr) 250px}
+.order-side-panel{padding:20px 16px;background:#f4f8fc;display:flex;flex-direction:column;gap:12px;justify-content:flex-start}
+.order-side-panel .location-card{margin:0;grid-template-columns:auto 1fr;padding:14px}
+.order-side-panel .location-card i{grid-column:2;margin-top:4px}
+.order-side-panel .primary{width:100%;min-height:48px}
+.configurator .price-card{margin-bottom:18px}
+@media(max-width:1100px){
+  .builder-screen:not(.is-hidden) .builder-layout{grid-template-columns:minmax(360px,40%) minmax(0,1fr)}
+  .order-side-panel{grid-column:1/-1;flex-direction:row;align-items:center}
+  .order-side-panel .location-card{flex:1}
+  .order-side-panel .primary{width:auto;min-width:220px}
+}
+@media(max-width:900px){
+  .builder-screen:not(.is-hidden) .builder-layout{display:flex;flex-direction:column}
+  .order-side-panel{order:3;flex-direction:column}
+  .order-side-panel .primary{width:100%}
+}
