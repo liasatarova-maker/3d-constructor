@@ -77,3 +77,18 @@
   .order-side-panel{order:3;flex-direction:column}
   .order-side-panel .primary{width:100%}
 }
+
+/* Contact card in right column */
+.contact-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:18px;display:flex;flex-direction:column;gap:16px}
+.contact-location{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;text-decoration:none;color:var(--ink)}
+.contact-location small,.contact-location b,.contact-location i{display:block}
+.contact-location small,.contact-lines small{font-size:10px;color:#8b98a8;margin-bottom:4px}
+.contact-location b,.contact-lines b{font-size:13px;line-height:1.35}
+.contact-location i{font-style:normal;font-size:11px;font-weight:700;color:#2d7dce;margin-top:8px}
+.contact-lines{padding-top:14px;border-top:1px solid #edf1f5;display:grid;gap:12px}
+.contact-lines a{text-decoration:none;color:var(--ink)}
+.contact-socials{padding-top:14px;border-top:1px solid #edf1f5;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.contact-socials a{height:38px;border:1px solid #d8e5f2;border-radius:11px;background:#f6faff;color:#287fd5;text-decoration:none;display:grid;place-items:center;font-size:11px;font-weight:800}
+.contact-socials a:hover{background:#eaf5ff;border-color:#a9cff9}
+.order-side-panel{padding-top:20px}
+.order-side-panel .contact-card{width:100%;box-sizing:border-box}
