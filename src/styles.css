@@ -54,3 +54,7 @@
 @media(max-width:650px){
   .option-group .spec-list input[type="number"]{width:76px;min-width:76px;max-width:76px;height:36px}
 }
+
+/* Vertically center labels in dimension rows */
+.option-group .spec-list>div:has(input[type="number"]){align-items:center}
+.option-group .spec-list>div:has(input[type="number"])>small{margin:0;align-self:center}
